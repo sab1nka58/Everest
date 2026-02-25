@@ -26,7 +26,7 @@ export interface ISubMenu {
   description?: string;
 }
 
-export const getNavLinks = (t: (key: unknown) => string): INavLink[] => [
+export const getNavLinks = (t: (key: any) => string): INavLink[] => [
   { id: 1, title: t("main"), path: "/" },
   { id: 2, title: t("about"), path: "/about" },
   {
