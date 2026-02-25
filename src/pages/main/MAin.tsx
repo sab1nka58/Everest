@@ -2,7 +2,13 @@ import React from 'react'
 
 const MAin = () => {
   return (
-    <div>MAin</div>
+    <>
+    
+
+    <div className="">
+      
+    </div>
+    </>
   )
 }
 
