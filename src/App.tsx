@@ -1,7 +1,6 @@
-import { useState } from 'react'
 
 import Navbar from './component/Navbar/Navbar.tsx'
-import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom'
+import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import MAin from './pages/main/MAin.tsx'
 import About from './pages/about/about.tsx'
 import EverestKids from './pages/EverestKids/EverestKids.tsx'
