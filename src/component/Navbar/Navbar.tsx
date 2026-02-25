@@ -70,7 +70,7 @@ const Navbar = () => {
         ВАРИАНТ 1: МЕГА-МЕНЮ (Например, для раздела "Services")
         ============================================================ */}
     {item.variant === 'mega' ? (
-      <div className="flex gap-12 items-center justify-center re"  re >
+      <div className="flex gap-12 items-center justify-center re"  >
         
         {/* ЛЕВАЯ КОЛОНКА: Primary Services (Сетки с карточками) */}
         <div className="flex-1">

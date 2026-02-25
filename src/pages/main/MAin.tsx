@@ -25,9 +25,9 @@ const MAin = () => {
     
 {/* BANNER  */}
     <section className="relative min-h-[700px] w-full  flex items-center overflow-hidden bg-white justify-between">
-      <div className=" mx-auto px-6 flex flex-col justify-center max-w-[1240px] relative ">
+      <div className=" mx-auto px-6 flex flex-col justify-center relative ">
       {/* Контентная часть (Текст + Кнопки) */}
-      <div className="z-10 flex flex-col items-start">
+      <div className="z-10 flex flex-col items-start max-w-[1200px] mx-auto">
         <div className="flex justify-center gap-5">
           <h1 className=" font-black text-[64px] uppercase leading-tight ">
             <span className="text-pink-600">Haqiqiy</span> muvaffaqiyat <br />
