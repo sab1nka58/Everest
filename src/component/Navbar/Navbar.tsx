@@ -1,7 +1,7 @@
 
 import { Link, NavLink } from 'react-router-dom';
 import { GlobeIcon } from './Icon';
-import logo from '../../assets/Group 5.png';
+import logo from '../../assets/x.png';
 import { getNavLinks } from './navLinks';
 import { useState } from 'react';
 

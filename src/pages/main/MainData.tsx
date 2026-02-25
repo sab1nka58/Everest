@@ -1,8 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { ReactNode } from "react";
 import { CupIcon, DiamondIcon, HaqiqitOqishIcon, NarxlarIcon, QulayJoylashuvIcon, SifatliTalimIcon, TeleginIcon, TreeIcon, UserIcon, YuqoriNatijalarIcon } from "./MainIcon";
-
-
+import IELTSimg from "../../assets/xizmatlar/IELTS.png";
+import Multiimg from "../../assets/xizmatlar/multi.png";
+import Computrimg from "../../assets/xizmatlar/Group 5.png";
+import Examimg from "../../assets/xizmatlar/Visual part.png";
 export interface ICardsData {
   id: number;
   title: string;
@@ -22,6 +24,16 @@ export interface IStatsData {
     label: string;
     watermark: string;
  }
+
+ export interface IServices {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    bgColor: string;
+    showLink?: boolean;
+    path: string;
+  }
 
 export const cardsData =[
     {id: 1, title: 'Hamyonbop narxlar', text: 'Sifatli ta’lim — hamyonbop va barqaror narxlar asosida.', icon: <NarxlarIcon/>},
@@ -47,6 +59,44 @@ export const bottomStats = [
   { id: 4, value: "1 000+", label: "IELTS 7.0-7.5 o'quvchilar", watermark: "7" },
   { id: 5, value: "10", label: "IELTS 9.0 o'qituvchilar", watermark: "9" },
 ];
+
+
+
+export const services = [
+    {
+      id: 1,
+      title: "Computer Delivered Mock Exams",
+      description: "Haqiqiy IELTS imtihon muhitini, original materiallar asosida his qilib ko'ring.",
+      image: Computrimg,
+      bgColor: "bg-gray",
+      path: '/services/cdi_mock_exams'
+    },
+    {
+      id: 2,
+      title: "Multi-Level Mock Exams",
+      description: "CEFR (Multi-level) imtihoni uchun mo'ljallangan namunaviy testlar.",
+      image: Multiimg,
+      bgColor: "bg-pink-gradient",
+      path: '/services/cdi_mock_exams',
+      showLink: true,
+    },
+    {
+      id: 3,
+      title: "Everest Examinations Centre",
+      description: "Imtihon qulay, bosh og'riqsiz va sifatli bo'lishini ta'minlaymiz.",
+      image: Examimg, // твои синие наушники
+      bgColor: "bg-gray",
+      path:'/services/examinations_centre'
+    },
+    {
+      id: 4,
+      title: "IELTS Registration",
+      description: "Xizmatimiz yordamida IELTS imtihoniga bir necha daqiqa ichida ro'yxatdan o'ting.",
+      image: IELTSimg,
+      bgColor: "bg-white-shadow",
+       path: '/services/ielts_registration_services'
+    }
+  ];
 const MainData = () => {
   return (
     <div>MainData</div>
