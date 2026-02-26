@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import bannerImg from "../../assets/banner/Group 4.png";
 import {
   EverestKidsBanner,
-  GlobeIcon,
+  
   TelefonIcon,
   TeleginIcon,
 } from "../../component/Navbar/Icon";
@@ -36,9 +36,9 @@ const MAin = () => {
   const courses = servicesSubmenu.filter((item) => item.icon);
 
   const [activeIdx, setActiveIdx] = useState(0);
-  const [openIdx, setOpenIdx] = useState(null);
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
 
-  const toggleFaq = (idx) => {
+  const toggleFaq = (idx: number) => {
     // Если кликаем на уже открытый — закрываем, иначе открываем новый
     setOpenIdx(openIdx === idx ? null : idx);
   };
@@ -699,7 +699,7 @@ const MAin = () => {
                 Explain the matter
               </label>
               <textarea
-                rows="4"
+                
                 placeholder="Give a thorough description to the matter of your interest"
                 className="w-[724] h-[100px] text-[14px] bg-[#f4f7fa] border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"
               />
