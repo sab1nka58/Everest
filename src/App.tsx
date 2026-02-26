@@ -16,6 +16,7 @@ import RussianPage from './pages/Services/RussianPage.tsx'
 import IeltsresultsPage from './pages/results/IeltsresultsPage.tsx'
 import MultiLevelResultsPage from './pages/results/MultiLevelResultsPage.tsx'
 import SatresultsPage from './pages/results/SatresultsPage.tsx'
+import Footer from './component/Navbar/Footer.tsx'
 
 function App() {
   return (
@@ -48,6 +49,8 @@ function App() {
         {/* 404 в конце */}
         <Route path="*" element={<div>404 — Страница не найдена</div>} />
       </Routes>
+
+      <Footer />
     </BrowserRouter>
   )
 }

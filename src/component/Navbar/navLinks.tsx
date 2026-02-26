@@ -27,11 +27,11 @@ export interface ISubMenu {
 }
 
 export const getNavLinks = (t: (key: any) => string): INavLink[] => [
-  { id: 1, title: t("main"), path: "/" },
-  { id: 2, title: t("about"), path: "/about" },
+  { id: 1, title: t("Main"), path: "/" },
+  { id: 2, title: t("About"), path: "/about" },
   {
     id: 3,
-    title: t("services"),
+    title: t("Services"),
     variant: "mega",
     submenu: [
       {
@@ -130,8 +130,8 @@ export const getNavLinks = (t: (key: any) => string): INavLink[] => [
       { id: 13, title: "SAT Results", path: "/results/sat", icon: <SATIcon /> },
     ],
   },
-  { id: 7, title: t("team"), path: "/careers" },
-  { id: 8, title: t("contact"), path: "/contactus" },
+  { id: 7, title: t("Team"), path: "/careers" },
+  { id: 8, title: t("Contact"), path: "/contactus" },
 ];
 
 const navLinks = () => {

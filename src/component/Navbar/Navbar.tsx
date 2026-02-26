@@ -7,14 +7,14 @@ import { useState } from 'react';
 
 const translations = {
   EN: {
-    main: "Main", about: "About", services: "Services", results: "Results",
-    kids: "Everest kids", global: "Go global", team: "Careers",
-    contact: "Contact us", buildFuture: "Build my future",
+    Main: "Main", About: "About", Services: "Services", Results: "Results",
+    Kids: "Everest kids", Global: "Go global", Team: "Careers",
+    Contact: "Contact us", BuildFuture: "Build my future",
   },
   UZ: {
-    main: "Asosiy", about: "Haqimizda", services: "Kurslar", results: "Natijalar",
-    kids: "Everest kids", global: "Go global", team: "Jamoa",
-    contact: "Aloqa", buildFuture: "Kelajagingni qur",
+    Main: "Asosiy", About: "Haqimizda", Services: "Kurslar", Results: "Natijalar",
+    Kids: "Everest kids", Global: "Go global", Team: "Jamoa",
+    Contact: "Aloqa", BuildFuture: "Kelajagingni qur",
   }
 };
 
@@ -179,7 +179,7 @@ const Navbar = () => {
           </div>
 
           <button className="bg-[#0052FF] text-white px-6 py-3 rounded-xl text-[15px] font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 active:scale-95">
-            {t('buildFuture')}
+            {t('BuildFuture')}
           </button>
         </div>
       </div>

@@ -5,6 +5,13 @@ import IELTSimg from "../../assets/xizmatlar/IELTS.png";
 import Multiimg from "../../assets/xizmatlar/multi.png";
 import Computrimg from "../../assets/xizmatlar/Group 5.png";
 import Examimg from "../../assets/xizmatlar/Visual part.png";
+import Card1 from "../../assets/goglobal/Card.png";
+
+export interface IFaqData {
+  id: number;
+
+
+}
 export interface ICardsData {
   id: number;
   title: string;
@@ -34,6 +41,19 @@ export interface IStatsData {
     showLink?: boolean;
     path: string;
   }
+ export interface IKidsData {
+    title: string;
+    age: string;
+    desc: string;
+ }
+
+ export interface IImages { 
+    id: number;
+    src: string;
+    className: string;
+
+ }
+  
 
 export const cardsData =[
     {id: 1, title: 'Hamyonbop narxlar', text: 'Sifatli ta’lim — hamyonbop va barqaror narxlar asosida.', icon: <NarxlarIcon/>},
@@ -96,6 +116,68 @@ export const services = [
       bgColor: "bg-white-shadow",
        path: '/services/ielts_registration_services'
     }
+  ];
+
+export const faqData = [
+    {
+      id: 1,
+      question: "How do I become an Everester?",
+      answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo."
+    },
+    {
+      id: 2,
+      question: "Are there any discounts?",
+      answer: "Everest o'quv markazida turli xil chegirmalar mavjud, masalan, bitta oiladan ikki kishi o'qisa yoki bir vaqtning o'zida bir nechta kursga yozilsangiz."
+    },
+    {
+      id: 3,
+      question: "Are there only classes of IELTS at Everest?",
+      answer: "Yo'q, bizda General English, Kids English, Matematika va boshqa ko'plab fanlar bo'yicha sifatli darslar tashkil etilgan."
+    },
+    {
+      id: 4,
+      question: "When was Everest founded?",
+      answer: "Everest o'quv markazi ko'p yillik tajribaga ega va o'z faoliyati davomida minglab talabalarga yordam berib kelmoqda."
+    },
+    {
+      id: 5,
+      question: "When was Everest founded?",
+      answer: "Everest o'quv markazi ko'p yillik tajribaga ega va o'z faoliyati davomida minglab talabalarga yordam berib kelmoqda."
+    },
+    {
+      id: 6,
+      question: "How can I get 9.0?",
+      answer: "Everest o'quv markazi ko'p yillik tajribaga ega va o'z faoliyati davomida minglab talabalarga yordam berib kelmoqda."
+    }
+  ];
+
+  export const KidsData = [
+    
+              {
+                title: "Youngsters",
+                age: "1-3 sinflar",
+                desc: "O‘yin va interaktiv mashg‘ulotlar orqali ingliz tilining asoslarini o‘rganish.",
+              },
+              {
+                title: "Juniors",
+                age: "4-6 sinflar",
+                desc: "Mantiqiy fikrlash, grammatika va lug‘at boyligini rivojlantirishga yo‘naltirilgan darslar.",
+              },
+              {
+                title: "Teens",
+                age: "7-9 sinflar",
+                desc: "Akademik ingliz tili, maktab fanlari bilan uyg‘unlashgan va rasmiy til imtihonlariga tayyorlov.",
+              },
+  ]
+  export const images = [
+    { id: 1, src: Card1, className: "col-span-2 row-span-1 rounded-[30px]" }, // Верхнее левое широкое
+    { id: 2, src: "../../assets/go global/2.png", className: "col-span-2 row-span-1 rounded-[30px]" }, // Верхнее правое широкое
+    { id: 3, src: "../../assets/go global/3.png", className: "col-span-1 row-span-1 rounded-[25px]" }, // Маленькое квадратное
+    { id: 4, src: "../../assets/go global/4.png", className: "col-span-2 row-span-2 rounded-[40px]" }, // Центральное большое (с девушкой)
+    { id: 5, src: "../../assets/go global/5.png", className: "col-span-1 row-span-2 rounded-[25px]" }, // Узкое высокое справа
+    { id: 6, src: "../../assets/go global/6.png", className: "col-span-1 row-span-1 rounded-[25px]" }, // Нижнее левое
+    { id: 7, src: "../../assets/go global/7.png", className: "col-span-1 row-span-1 rounded-[25px]" }, // Нижнее центральное
+    { id: 8, src: "../../assets/go global/8.png", className: "col-span-1 row-span-1 rounded-[25px]" }, // Нижнее правое
   ];
 const MainData = () => {
   return (
