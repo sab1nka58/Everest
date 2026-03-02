@@ -822,9 +822,9 @@ const [searchTerm, setSearchTerm] = useState('');
             className="w-full h-full object-cover grayscale opacity-90 transition-all duration-700"
             style={{ filter: activeId ? 'grayscale(0.5) contrast(1.1)' : 'grayscale(1)' }}
           />
-
-.filter((branch) => 
-    branch.name.toLowerCase().includes(searchTerm.toLowerCase())
+(
+.
+  
  
           {/* Слой с пинами */}
           {locations.map((branch) => (
