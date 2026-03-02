@@ -4,26 +4,14 @@ import { GlobeIcon } from './Icon';
 import logo from '../../assets/x.png';
 import { getNavLinks } from './navLinks';
 import { useState } from 'react';
-
-const translations = {
-  EN: {
-    Main: "Main", About: "About", Services: "Services", Results: "Results",
-    Kids: "Everest kids", Global: "Go global", Team: "Careers",
-    Contact: "Contact us", BuildFuture: "Build my future",
-  },
-  UZ: {
-    Main: "Asosiy", About: "Haqimizda", Services: "Kurslar", Results: "Natijalar",
-    Kids: "Everest kids", Global: "Go global", Team: "Jamoa",
-    Contact: "Aloqa", BuildFuture: "Kelajagingni qur",
-  }
-};
+import { useLanguage } from '../../context/LanguageContext';
 
 const Navbar = () => {
-  const [lang, setLANG] = useState<'EN' | 'UZ'>('EN');
+  const { lang, setLang, t } = useLanguage();
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
 
-  const t = (key: keyof typeof translations['EN']) => translations[lang][key];
+  // const t = (key: keyof typeof translations['EN']) => translations[lang][key];
   const navLinks = getNavLinks(t);
 
   return (
@@ -162,11 +150,14 @@ const Navbar = () => {
               <span className={`text-[10px] transition-transform ${isLangOpen ? 'rotate-180' : ''}`}>▼</span>
             </button>
             {isLangOpen && (
-              <ul className="absolute right-0 mt-2 w-32 bg-white shadow-2xl rounded-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2">
+              <ul className="absolute right-0 top-6 mt-2 w-32 bg-white shadow-2xl rounded-2xl border border-gray-100 p-2 z-50 animate-in fade-in slide-in-from-top-2">
                 {['EN', 'UZ'].map((l) => (
                   <li key={l}>
                     <button 
-                      onClick={() => { setLANG(l as 'EN' | 'UZ'); setIsLangOpen(false); }}
+                     onClick={() => { 
+                  setLang(l);       // МЕНЯЕМ ГЛОБАЛЬНО
+                  setIsLangOpen(false); // ЗАКРЫВАЕМ МЕНЮ
+                }}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors ${lang === l ? 'bg-blue-50 text-blue-600 font-bold' : 'hover:bg-gray-50 text-gray-600'}`}
                     >
                       {l === 'EN' ? 'English' : "O'zbekcha"}

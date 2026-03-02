@@ -1,20 +1,23 @@
 import { Link } from "react-router-dom";
 import bannerImg from "../../assets/banner/Group 4.png";
+import { useLanguage } from "../../context/LanguageContext";
+import ResultdImg from "../../assets/Mockup.png";
 import {
   EverestKidsBanner,
-  
   TelefonIcon,
   TeleginIcon,
 } from "../../component/Navbar/Icon";
 import { getNavLinks } from "../../component/Navbar/navLinks";
 import { useState } from "react";
 import {
-  bottomStats,
-  cardsData,
-  faqData,
-  KidsData,
-  services,
-  statsData,
+  getBottomStats,
+  getCardsData,
+  getFaqData,
+  getKidsData,
+  getServicesData,
+  getStatsData,
+  locations,
+  results,
 } from "./MainData";
 import everestIcon from "../../assets/banner/bg.png";
 import imgBanner from "../../assets/banner/image 24.png";
@@ -23,8 +26,22 @@ import LogoKids from "../../assets/LogoKids.png";
 import EverestKids from "../../assets/EverestKids.png";
 import Colaj from "../../assets/Collage.png";
 import Map from "../../assets/banner/global.png";
+import MAP  from "../../assets/location/Screenshot 2025-09-06 at 12.32.21 AM 1.png";
+import { ArrowIcon, MapIcon, MetroIcon, PeopleIcon } from "./MainIcon";
+
+
+  
 
 const MAin = () => {
+  const { t } = useLanguage();
+  const cards = getCardsData(t);
+  const statsData = getStatsData(t);
+  const bottomStats = getBottomStats(t);
+  const services = getServicesData(t);
+  const KidsData = getKidsData(t); // Получаем данные для Kids
+  const faqData = getFaqData(t); // Получаем данные для FAQ
+  const [activeId, setActiveId] = useState(null);
+
   // Вызываем функцию с заглушкой (key => key), чтобы получить данные без ошибок
   const links = getNavLinks((key) => key);
 
@@ -37,58 +54,56 @@ const MAin = () => {
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+const [searchTerm, setSearchTerm] = useState('');
 
   const toggleFaq = (idx: number) => {
     // Если кликаем на уже открытый — закрываем, иначе открываем новый
     setOpenIdx(openIdx === idx ? null : idx);
+
+    //  Достаем переводчик
   };
+
   return (
     <>
-      {/* BANNER  */}
+      {/* BANNER */}
       <section className="relative min-h-[700px] w-full flex items-center bg-white overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 w-full grid grid-cols-1 md:grid-cols-1 items-center relative z-10">
-          {/* ЛЕВАЯ ЧАСТЬ: Текст и кнопки */}
           <div className="flex flex-col max-w-[1000px]">
-            <h1 className="font-black  text-[40px] md:text-[64px] uppercase leading-[1.1] text-gray-900">
-              <span className="text-[#E91E63]">Haqiqiy</span> muvaffaqiyat
-              <br />
-              egalari maskaniga
-              <br />
-              xush kelibsiz!
+            {/* ЗАГОЛОВОК */}
+            <h1 className="font-black text-[40px] md:text-[64px] uppercase leading-[1.1] text-gray-900">
+              <span className="text-[#E91E63]">{t("hero_title_pink")}</span>{" "}
+              {t("hero_title_main")}
             </h1>
 
+            {/* ОПИСАНИЕ */}
             <p className="mt-6 text-gray-600 text-lg max-w-[500px] leading-relaxed">
-              Natija va ta'lim sifati bo'yicha O'zbekistondagi 1-raqamli o'quv
-              markazida ta'lim oling va bilimingizni yuqori natijaga
-              aylantiring.
+              {t("hero_description")}
             </p>
 
+            {/* КНОПКИ */}
             <div className="mt-10 flex gap-4">
               <button className="bg-[#0056D2] text-white px-10 py-4 rounded-lg font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200">
-                Kursga yozilish
+                {t("btn_enroll")}
               </button>
               <button className="bg-[#E5E7EB] text-gray-800 px-10 py-4 rounded-lg font-bold hover:bg-gray-300 transition">
-                Batafsil ma'lumot
+                {t("btn_details")}
               </button>
             </div>
           </div>
-
-          {/* ПРАВАЯ ЧАСТЬ: Пустая, так как гора идет абсолютом фоном */}
           <div className="hidden md:block"></div>
         </div>
 
-        {/* ФОНОВАЯ ГОРА (Абсолютное позиционирование) */}
+        {/* ФОНОВАЯ ГОРА */}
         <div className="absolute right-0 bottom-0 w-full md:w-[60%] h-full pointer-events-none">
           <img
             src={bannerImg}
             alt="Success Mountain"
             className="object-contain object-right-bottom h-full w-full"
           />
-          {/* Розовая линия-градиент за горой */}
           <div className="absolute inset-0 bg-gradient-to-l from-pink-50/50 to-transparent -z-10" />
         </div>
 
-        {/* Пагинация (черточки) - привязываем к левому краю контейнера */}
+        {/* ПАГИНАЦИЯ */}
         <div className="absolute bottom-10 left-6 md:left-24 flex gap-2">
           <span className="h-1.5 w-12 bg-gray-400 rounded-full"></span>
           {[...Array(4)].map((_, i) => (
@@ -99,24 +114,27 @@ const MAin = () => {
           ))}
         </div>
       </section>
-      {/* KURSLAR */}
 
+      {/* Kurslar */}
       <section className="bg-[#F8F9FB] py-20 px-8">
         <div className="max-w-[1440px] mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 mt-20 gap-6">
             <div className="max-w-200">
               <h2 className="text-4xl font-black text-[#1C2329] uppercase mb-4">
-                <span className="text-blue-600">Kurslar</span> va qabullar
+                {/* Разделяем, чтобы Kurslar был синим */}
+                <span className="text-blue-600">
+                  {t("courses_title_blue")}
+                </span>{" "}
+                {t("courses_title_main")}
               </h2>
+
               <p className="text-[#1C2329] text-[16px] max-w-[840px] w-full">
-                Qabul barcha manzillarimizda har kuni 09:00 dan 20:00 gacha
-                davom etadi. Qabulxonaga kelganingizda, xodimlarimiz test va
-                qisqa suhbat orqali darajangizni aniqlab, sizga mos guruh uchun
-                sinov darsiga yo‘naltiradi.
+                {t("courses_description")}
               </p>
             </div>
+
             <button className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-3">
-              Kursga yozilish <TeleginIcon />
+              {t("btn_enroll")} <TeleginIcon />
             </button>
           </div>
 
@@ -154,91 +172,81 @@ const MAin = () => {
       </section>
 
       {/* Nega Aynan EVEREST */}
-      <section className="relative w-full py-20 bg-white overflow-hidden  ">
-        {/* МЕСТО ДЛЯ КАРТИНКИ (Задний фон) */}
+      <section className="relative w-full py-28 my-8 bg-white overflow-hidden">
+        {/* ФОН (без изменений) */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none">
           <img
             src={everestIcon}
             alt="mountains"
-            className="w-full h-full object-cover opacity-100"
+            className="w-full h-full object-cover"
           />
-          {/* Мягкий градиент, чтобы картинка плавно сливалась с фоном */}
           <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white/10" />
         </div>
 
-        {/*(Поверх картинки) */}
-        <div className="relative z-10  max-w-[1440px] mx-auto flex flex-col md:flex-row items-center gap-10 p-10">
-          {/* (Заголовок) */}
-          <div className="w-full md:w-1/3 space-y-6 ">
+        <div className="relative z-10 max-w-[1440px] mx-auto flex flex-col md:flex-row items-center gap-10 p-10">
+          {/* ЗАГОЛОВОК */}
+          <div className="w-full md:w-1/3 space-y-6">
             <h2 className="text-[40px] md:text-5xl font-black uppercase leading-tight text-center md:text-left">
-              <span className="text-blue-600">Nega </span>
+              <span className="text-blue-600">{t("why_everest_pink")}</span>
               <br />
-              <span className="text-gray-900">aynan Everest?</span>
+              <span className="text-gray-900">{t("why_everest_main")}</span>
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed max-w-sm">
-              Everest o'quv markazi o'quvchilar uchun qulay sharoitlar yaratib,
-              har bir xohlovchi ta'lim olishi uchun hamyonbop narxlarda sifatli
-              ta'lim taklif etadi.
+              {t("why_everest_description")}
             </p>
           </div>
 
           {/* ПРАВАЯ ЧАСТЬ (Аккордеон) */}
-          <div className="flex flex-1 w-full h-[600px] gap-2">
-            {cardsData.map((card, index) => {
+          <div className="flex flex-1 w-full h-[400px]  gap-2">
+            {cards.map((card, index) => {
               const isActive = activeIdx === index;
-
               return (
                 <div
                   key={card.id}
                   onMouseEnter={() => setActiveIdx(index)}
                   className={`
-  group relativу rounded-[40px] max-w-[300px] h-120 p-5 transition-all f duration-700 ease-in-out cursor-pointer overflow-hidden 
-  
-  ${
-    isActive
-      ? "flex-[4] bg-white/80 backdrop-blur-md shadow-2xl border-2 border-white gap-10" // Сделали рамку 2px
-      : "flex-[1] bg-white/20 backdrop-blur-[2px] border border-gray-400/50"
-  } 
-  p-6 flex flex-col
-`}
+    relative rounded-[40px] transition-all duration-700 ease-in-out cursor-pointer overflow-hidden h-[450px] 
+    
+    ${
+      isActive
+        ? "flex-[4] bg-white shadow-2xl scale-105 z-20 max-w-[320px] " // Активная забирает всё пространство
+        : "flex-[1.5] max-w-[80px] bg-white/40 backdrop-blur-sm border border-gray-200" // Закрытая превращается в узкую полоску
+    } 
+    
+    p-4 flex flex-col  /* Центрируем всё по горизонтали */
+  `}
                 >
-                  {/* ИКОНКА */}
+                  {/* ИКОНКА (уменьшаем для закрытых) */}
                   <div
                     className={`
-              w-16 h-16 [&>svg]:w-full [&>svg]:h-full flex items-center justify-center m-5 gap-2 
-              transition-all duration-500 transform 
-              ${isActive ? "grayscale-0 scale-110 " : "grayscale group-hover:grayscale-0 group-hover:scale-110"}
-            `}
+    transition-all duration-500  
+    ${isActive ? "w-16 h-10 mb-6" : "w-10 h-10 mb-4"} 
+    flex-shrink-0
+  `}
                   >
                     {card.icon}
                   </div>
 
-                  {/* КОНТЕНТ (Описание) */}
-                  <div
-                    className={`
-              mt-10  transition-all duration-500 
-              ${isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
-            `}
-                  >
-                    <h3 className="text-[28px] max-w-[240px] mr-5   font-bold text-gray-800 whitespace-nowrap mb-4">
-                      {card.title}
-                    </h3>
-                    <p className="text-gray-500 text-[16px]  min-w-[230px] leading-relaxed">
-                      {card.text}
-                    </p>
-                  </div>
+                  {/* ВЕРТИКАЛЬНЫЙ ТЕКСТ (теперь он должен быть виден только в закрытых) */}
+                  {!isActive && (
+                    <div className="flex-[1.5] flex items-center justify-center  w-full">
+                      <span className="rotate-90 whitespace-nowrap font-bold text-gray-800 uppercase tracking-widest text-[24px] ">
+                        {card.title}
+                      </span>
+                    </div>
+                  )}
 
-                  {/* ВЕРТИКАЛЬНЫЙ ТЕКСТ (Для закрытых карточек) */}
-                  <div
-                    className={`
-               inset-0  flex items-center justify-center  transition-opacity duration-500 pointer-events-none
-              ${isActive ? "opacity-0" : "opacity-100 "}
-            `}
-                  >
-                    <span className="rotate-90  whitespace-nowrap  font-bold text-[24px] uppercase tracking-widest text-[10px]">
-                      {card.title}
-                    </span>
-                  </div>
+                  {/* КОНТЕНТ (виден только в активной) */}
+                  {isActive && (
+                    <div className="opacity-100 transition-opacity duration-500 delay-200 mt-4 ">
+                      <h3 className="text-[24px]  font-bold text-gray-900 pt-20 uppercase">
+                        {card.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        {card.text}
+                      </p>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -262,10 +270,10 @@ const MAin = () => {
         <div className="relative z-10 max-w-[1240px] mx-auto text-center">
           {/* ЗАГОЛОВОК */}
           <h2 className="text-white text-4xl md:text-10 font-black uppercase mb-4 tracking-wider">
-            Natijalar gapirsin!
+            {t("stats_main_title")}
           </h2>
           <p className="text-white/70 text-sm mb-16 text-4 uppercase tracking-widest">
-            Everest o'quv markazining 13 yillik faoliyati raqamlarda
+            {t("stats_sub_title")}
           </p>
 
           {/* СЕТКА КАРТОЧЕК */}
@@ -339,12 +347,12 @@ const MAin = () => {
         <div className="z-2 max-w-[1380px] mx-auto relative w-full grid grid-cols-1 md:grid-cols-2  items-start gap-10 ">
           <div className="flex flex-col gap-2 max-w-[550px] w-full ml-10 row-span-1">
             <h2 className="font-[900] text-[40px] leading-[130%] uppercase tracking-normal">
-              Qo‘shimcha <span className="text-[#0154F8]">xizmatlar</span>
+              {t("extra_services_title")}{" "}
+              <span className="text-[#0154F8]">{t("extra_services_blue")}</span>
             </h2>
 
             <p className="font-normal text-base leading-[140%] text-gray-500 text-[16px]">
-              EVEREST o‘quv markazi IELTS imtihoniga tayyorlanayotgan nomzodlar
-              uchun bir qator qo‘shimcha imkoniyatlarni taqdim etadi.
+              {t("extra_services_desc")}
             </p>
           </div>
 
@@ -370,7 +378,8 @@ const MAin = () => {
 
                 <div className="">
                   <p className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-4 pl-10 text-blue-600 font-bold">
-                    Learn more <span className="text-xl">→</span>
+                    {t("learn_more")}
+                    <span className="text-xl">→</span>
                   </p>
                 </div>
               </Link>
@@ -378,6 +387,7 @@ const MAin = () => {
           ))}
         </div>
       </section>
+
       {/* Everest kids */}
       <section className="relative w-full max-w-[1440px] mx-auto min-h-[600px] bg-gradient-to-r from-[#0057ff] to-[#002e99]/90 rounded-[50px] overflow-hidden p-14 md:p-20 text-white my-8">
         {/* СЛОЙ 1: Фоновый паттерн (дудлы) */}
@@ -401,24 +411,20 @@ const MAin = () => {
           </div>
 
           <h2 className="text-[28px] md:text-4xl font-black mb-6 leading-tight">
-            Maktab o'quvchilari uchun maxsus ingliz tili kurslari
+            {t("kids_title")}
           </h2>
 
           <p className="text-white/80 text-[16px] mb-10 max-w-[550px]">
-            1–9-sinf o‘quvchilari uchun mo‘ljallangan maxsus loyihamizda
-            bolalarning yosh va darajasiga mos ravishda alohida guruhlarda
-            ta’lim beriladi. Kuchli va tajribali EVERESTER ustozlar maxsus
-            dastur asosida bolalarning til ko‘nikmalarini bosqichma-bosqich
-            rivojlantiradi.
+            {t("kids_desc")}
           </p>
 
           <div className="flex gap-4 mb-12 pt-6">
             <button className="bg-white text-[16px] text-black gap-2 items-center  px-7 py-3 rounded-2xl font-bold hover:bg-opacity-90 transition-all flex">
-              Kursga yozilish <TelefonIcon />
+              {t("kids_btn_reg")} <TelefonIcon />
             </button>
             <Link to="/everestkids">
               <button className="border border-white/30 bg-white/10 backdrop-blur-sm px-8 py-4 rounded-2xl font-bold hover:bg-white/20 transition-all">
-                Batafsil ma'lumot →
+                {t("kids_btn_more")}→
               </button>
             </Link>
           </div>
@@ -442,6 +448,7 @@ const MAin = () => {
           </div>
         </div>
       </section>
+
       {/* Go Global */}
       <section className="relative w-full pt-8 my-8 bg-[#FDFDFF] overflow-hidden max-w-[1440px] mx-auto">
         {/* СЛОЙ 1: Контурная карта (image_5fdd3f.jpg) */}
@@ -540,39 +547,34 @@ const MAin = () => {
                 </svg>
               </div>
               <h2 className="text-4xl font-black text-[46px] text-gray-900 uppercase tracking-tight">
-                Everest <br /> Go Global
+                {t("global_title")} <br /> {t("global_title_1")}
               </h2>
             </div>
 
             <div className="space-y-6 pt-10 max-w-[700px] w-full">
               <h3 className="text-[23px] font-bold text-gray-800 ">
-                Xorijiy oliygohlarda o'qish imkoniyatlari - universitet tanlash,
-                grant yutish va viza jarayonlarida yordam
+                {t("global_subtitle")}
               </h3>
               <p className="text-gray-500 text-16 leading-relaxed">
-                Yuqori akademik salohiyatga ega o‘zbek yoshlariga dunyoning top
-                universitetlarida ta’lim olishda ko‘maklashuvchi loyiha. Biz
-                sizga universitet tanlashdan tortib, hujjat topshirish, grant
-                yutish va viza olishgacha bo‘lgan butun jarayonda kompleks
-                yordam beramiz. </p>
-                <p className="text-gray-500 text-16 leading-relaxed">
-                Yuqori IELTS natijasi ustunlik bersa-da, IELTS
-                5.5 natijaga ega nomzodlar uchun ham mos bakalavr va
-                magistratura dasturlarini topishda ko‘maklashamiz.
+                {t("global_desc_1")}
+              </p>
+              <p className="text-gray-500 text-16 leading-relaxed">
+                {t("global_desc_2")}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-4 pt-4">
               <button className="bg-[#0057FF] hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-2xl flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-blue-100">
-                Bepul konsultatsiya
+                {t("global_btn_consult")}
                 <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
                   <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                 </svg>
               </button>
-              <Link to='/goglobal'>
-              <button className="bg-gray-200/50 hover:bg-gray-200 text-gray-700 font-bold py-4 px-8 rounded-2xl transition-all">
-                Batafsil ma'lumot →
-              </button></Link>
+              <Link to="/goglobal">
+                <button className="bg-gray-200/50 hover:bg-gray-200 text-gray-700 font-bold py-4 px-8 rounded-2xl transition-all">
+                  {t("kids_btn_more")} →
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -586,23 +588,127 @@ const MAin = () => {
           </div>
         </div>
       </section>
+
+      {/* Everester results */}
+      <section className=" max-w-[1440px] mx-auto py-8 mt-8 mb-8">
+        {/* Шапка: Заголовок и Кнопка */}
+        <div className="">
+          <h1
+            className="font-black 
+  
+  text-[40px] 
+  leading-[130%] 
+  tracking-normal 
+  uppercase 
+  text-[#1C2329]"
+          >
+            {t("results_title")}{" "}
+            <span className="text-[#0154F8]">{t("results_title_blue")}</span>
+          </h1>
+          <div className="flex gap-10  justify-between items-start ">
+            <p
+              className="text-[16px] 
+  leading-[140%] 
+  tracking-normal 
+  text-gray-500"
+            >
+              {t("results_subtitle")}
+            </p>
+            <Link to="/results/ielts">
+              <button className="bg-[#0154F8] text-white text-[16px] font-bold px-12 py-3 rounded-[12px] hover:bg-blue-700 transition-all flex items-center ">
+                {t("results_btn_all")} <span>→</span>
+              </button>
+            </Link>
+          </div>{" "}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {results.map((item) => (
+            <article
+              key={item.id}
+              // Добавили класс 'group' для связи наведения на карточку с цветом текста внутри
+              className="
+        group relative p-6 bg-white rounded-[32px] shadow-sm border border-transparent 
+        transition-all duration-300 hover:shadow-xl overflow-hidden
+      "
+            >
+              <h3
+                className="
+        font-bold text-[24px] w-10 leading-[120%] uppercase mb-1 text-[#1C2329]
+        transition-colors duration-300 group-hover:text-red-500 mb-5
+      "
+              >
+                {item.name}
+              </h3>
+
+              {/* Дата */}
+              <time className="block  font-normal text-[16px] text-gray-400">
+                {item.date}
+              </time>
+
+              {/* Контейнер для картинки */}
+              <div className="relative h-90 ">
+                {" "}
+                {/* Добавлена высота контейнеру, чтобы зафиксировать место */}
+                <img
+                  src={ResultdImg}
+                  alt="IELTS Certificate"
+                  className="
+            absolute 
+            top-0 
+            -right-60       /* Сдвигаем вправо за край */
+            w-[180%]         /* УВЕЛИЧЕНО: делает картинку огромной */
+            max-w-none       /* Позволяет игнорировать ширину родителя */
+            rotate-[-10deg]  /* Наклон */
+            translate-y-2    /* Сдвиг вниз */
+            opacity-100       /* Прозрачность как на макете */
+            grayscale-[30%]
+            pointer-events-none
+            transition-transform duration-500 group-hover:scale-105 /* Легкий зум при наведении */
+          "
+                />
+              </div>
+
+              {/* Плашка со счетом (Score Badge) */}
+              <div
+                className="
+        absolute bottom-6 left-6 right-6 z-10
+        flex flex-col items-center justify-center 
+        py-3 rounded-[20px] transition-colors
+        bg-[#F3F4F6] text-[#001A72] mt-10 w-[130px] h-[97px]
+        group-hover:bg-blue-600 group-hover:text-white /* Опционально: меняет цвет плашки при наведении */
+      "
+              >
+                <span className="text-[18px] font-black uppercase tracking-widest opacity-70">
+                  {t("results_score")}
+                </span>
+                <strong className="text-[40px] font-black leading-none">
+                  {item.score}
+                </strong>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       {/* Tez-Tez so`raladigan savollar */}
       <section className="bg-[#F8FAFF] py-8 px-6">
-        <div className="max-w-[1240px] mx-auto flex flex-col lg:flex-row gap-16">
+        <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-16">
           {/* ЛЕВАЯ ЧАСТЬ: Заголовок */}
           <div className="lg:w-1/3">
             <h2 className="text-[40px] font-black leading-tight uppercase mb-6">
-              Tez-tez <br /> so'raladigan <br />
-              <span className="text-[#0057FF]">savollar</span>
+              {t("faq_title")}
+              <br />
+              <span className="text-[#0057FF]">{t("faq_title_blue")} </span>
             </h2>
             <p className="text-[#1C2329 ] text-lg leading-relaxed text-[16px]">
-              You can find answers to most of your questions here
+              {t("faq_subtitle")}
             </p>
           </div>
 
           {/* ПРАВАЯ ЧАСТЬ: Аккордеон через MAP */}
           <div className="lg:w-2/3 space-y-4">
-            {faqData.map((item, index) => {
+            {getFaqData(t).map((item, index) => {
               const isOpen = openIdx === index;
 
               return (
@@ -659,72 +765,101 @@ const MAin = () => {
         </div>
       </section>
 
-      {/* Forma */}
-      <section className="bg-[#f8faff] mt-8 mb-8 px-4">
-        <div className="max-w-[1360px] mx-auto bg-white rounded-[40px] p-12 shadow-sm border border-gray-100">
-          <div className="text-center mb-10">
-            <p className="text-gray-500 text-sm mb-2 text-16px">
-              Could not find an answer?
-            </p>
-            <h2 className="text-[28] md:text-4xl font-bold text-gray-900">
-              Explain your matter and send the inquiry using the form below
-            </h2>
-          </div>
-
-          <form className="max-w-[900px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col gap-2">
-              <label className="text-[16px] font-medium text-black-700  ml-2">
-                Your name
-              </label>
-              <input
-                type="text"
-                placeholder="How can we call you?"
-                className="w-[352] h-[70px] bg-[#f4f7fa] text-[14px] border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-              />
+      {/* location */}
+      <section className="max-w-7xl mx-auto p-6 max-w-[1440px]">
+      <div className="flex flex-col lg:flex-row gap-8 bg-white p-4 rounded-[40px] shadow-sm border border-gray-100">
+        
+        {/* ЛЕВАЯ ЧАСТЬ: Список филиалов */}
+        <div className="w-full lg:w-[400px] flex flex-col overflow-y-auto gap-4 max-h-[600px] overflow-y-auto pr-2 [&::-webkit-scrollbar]:hidden 
+  /* Показываем при наведении */
+  hover:[&::-webkit-scrollbar]:block">
+          {/* Поиск (просто визуальный элемент) */}
+          <div className="relative mb-2">
+  <input 
+    type="text" 
+    placeholder="Searching for branches" 
+    value={searchTerm} // Привязываем значение
+    onChange={(e) => setSearchTerm(e.target.value)} // Обновляем при вводе
+    className="w-full p-4 pl-12 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+  />
+  <span className="absolute left-4 top-1/2 -translate-y-1/2 opacity-30">🔍</span>
+</div>
+          {locations.map((branch) => (
+            <div
+              key={branch.id}
+              onMouseEnter={() => setActiveId(branch.id)}
+              onMouseLeave={() => setActiveId(null)}
+              className={`
+                group flex items-center gap-4 p-4 rounded-[24px] border-2 transition-all cursor-pointer
+                ${activeId === branch.id ? 'border-pink-500 bg-pink-50/10 shadow-md ' : 'border-gray-50 bg-gray-50/50 hover:bg-gray-50'}
+              `}
+            >
+              <img src={branch.img} alt={branch.name} className="w-20 h-20 rounded-xl object-cover" />
+              <div className="flex-1">
+                <h4 className="font-bold text-[20px] text-[#1C2329]">{branch.name}</h4>
+                <p className="text-[12px] text-[#1C2329]-400 leading-tight mt-1 flex gap-1 items-center"><MapIcon /> {branch.address}</p>
+                <div className="flex items-center gap-4 mt-2 text-[14px] font-medium rounded-lg border border-gray-100 p-1">
+                  <span className="flex gap-1 border-r border-gray-200 pr-2 items-center"><MetroIcon /> Station name</span>
+                  <span className="flex gap-1 items-center"><PeopleIcon /> 0 km</span>
+                </div>
+              </div>
+              <div className={`
+                w-8 h-8 rounded-full flex items-center justify-center transition-all
+                ${activeId === branch.id ? 'bg-pink-500 text-white' : 'bg-gray-200 text-gray-400'}
+              `}>
+                <ArrowIcon />
+              </div>
             </div>
-
-            <div className="flex flex-col gap-2">
-              <label className="text-[16px] font-medium text-black-700 ml-2">
-                Phone number
-              </label>
-              <input
-                type="tel"
-                placeholder="Enter your phone number"
-                className="w-[352px] h-[44px] bg-[#f4f7fa] text-[14px] border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-              />
-            </div>
-
-            <div className="flex flex-col gap-2 md:col-span-2">
-              <label className=" text-[16px] font-medium text-black-700 ml-2">
-                Explain the matter
-              </label>
-              <textarea
-                
-                placeholder="Give a thorough description to the matter of your interest"
-                className="w-[724] h-[100px] text-[14px] bg-[#f4f7fa] border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"
-              />
-              <span className="text-right text-xs text-gray-400">0/500</span>
-            </div>
-
-            <div className="md:col-span-2 flex flex-col md:flex-row justify-between items-center mt-4 gap-6">
-              <label className="flex items-center gap-3 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  className="w-5 h-5 rounded border-gray bg-gray text-blue-600 focus:ring-blue-500"
-                />
-                <span className="text-xs text-gray-500 max-w-[400px]">
-                  By clicking "Submit", you agree to the processing of your
-                  personal data in accordance with our Privacy Policy.
-                </span>
-              </label>
-
-              <button className="bg-[#0057ff] hover:bg-blue-700 text-white font-bold py-3 px-20 rounded-2xl transition-all active:scale-95 shadow-lg shadow-blue-200">
-                Let's go!
-              </button>
-            </div>
-          </form>
+          ))}
         </div>
-      </section>
+
+        {/* ПРАВАЯ ЧАСТЬ: Карта (на основе картинки и SVG) */}
+        <div className="flex-1 relative rounded-[32px] overflow-hidden min-h-[400px] bg-gray-200 border border-gray-100">
+          {/* Замени "/map-screenshot.png" на свой скриншот карты */}
+          <img 
+            src={MAP}
+            alt="City Map" 
+            className="w-full h-full object-cover grayscale opacity-90 transition-all duration-700"
+            style={{ filter: activeId ? 'grayscale(0.5) contrast(1.1)' : 'grayscale(1)' }}
+          />
+
+.filter((branch) => 
+    branch.name.toLowerCase().includes(searchTerm.toLowerCase())
+ 
+          {/* Слой с пинами */}
+          {locations.map((branch) => (
+            <div
+              key={branch.id}
+              style={{ left: branch.coords.x, top: branch.coords.y }}
+              className={`
+                absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-300
+                ${activeId === branch.id ? 'scale-125 z-20' : 'scale-100 z-10'}
+              `}
+            >
+              {/* SVG Пин как на макете */}
+              <div className="relative cursor-pointer group">
+                <svg width="40" height="50" viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path 
+                    d="M20 0C8.95 0 0 8.95 0 20c0 14.25 20 30 20 30s20-15.75 20-30c0-11.05-8.95-20-20-20z" 
+                    fill={activeId === branch.id ? "#E91E63" : "#1D4ED8"} 
+                    className="transition-colors duration-300"
+                  />
+                  <circle cx="20" cy="20" r="7" fill="white" />
+                </svg>
+                
+                {/* Всплывающая подсказка над пином */}
+                {activeId === branch.id && (
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-white text-[12px] font-bold rounded-lg shadow-xl whitespace-nowrap animate-bounce">
+                    {branch.name}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))} )
+        </div>
+
+      </div>
+    </section>
     </>
   );
 };

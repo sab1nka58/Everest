@@ -17,10 +17,12 @@ import IeltsresultsPage from './pages/results/IeltsresultsPage.tsx'
 import MultiLevelResultsPage from './pages/results/MultiLevelResultsPage.tsx'
 import SatresultsPage from './pages/results/SatresultsPage.tsx'
 import Footer from './component/Navbar/Footer.tsx'
+import { LanguageProvider } from './context/LanguageContext.tsx'
 
 function App() {
   return (
-    <BrowserRouter>           {/* или RouterProvider если используешь createBrowserRouter */}
+    <BrowserRouter>  
+    <LanguageProvider>        {/* или RouterProvider если используешь createBrowserRouter */}
       <Navbar />
       <Routes>
         <Route path="/" element={<MAin />} />
@@ -51,6 +53,7 @@ function App() {
       </Routes>
 
       <Footer />
+      </LanguageProvider> 
     </BrowserRouter>
   )
 }
