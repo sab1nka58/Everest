@@ -823,7 +823,7 @@ const [searchTerm, setSearchTerm] = useState('');
             style={{ filter: activeId ? 'grayscale(0.5) contrast(1.1)' : 'grayscale(1)' }}
           />
 (
-.
+
   
  
           {/* Слой с пинами */}
