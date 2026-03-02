@@ -616,7 +616,7 @@ const [searchTerm, setSearchTerm] = useState('');
             </p>
             <Link to="/results/ielts">
               <button className="bg-[#0154F8] text-white text-[16px] font-bold px-12 py-3 rounded-[12px] hover:bg-blue-700 transition-all flex items-center ">
-                {t("results_btn_all")} <span>→</span>
+                {t("results_btn_all")} <span><ArrowIcon /></span>
               </button>
             </Link>
           </div>{" "}
