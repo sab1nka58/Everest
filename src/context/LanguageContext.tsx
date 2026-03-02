@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import { translations } from '../locales'; // Импортируем нашу "сборку"
 
-type LangType = 'EN' | 'UZ';
+export type LangType = 'EN' | 'UZ'; // Добавь слово export
 
 interface LanguageContextType {
   lang: LangType;

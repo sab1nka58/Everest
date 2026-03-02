@@ -4,7 +4,7 @@ import { GlobeIcon } from './Icon';
 import logo from '../../assets/x.png';
 import { getNavLinks } from './navLinks';
 import { useState } from 'react';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage, type LangType } from '../../context/LanguageContext';
 
 const Navbar = () => {
   const { lang, setLang, t } = useLanguage();
@@ -155,7 +155,7 @@ const Navbar = () => {
                   <li key={l}>
                     <button 
                      onClick={() => { 
-                  setLang(l);       // МЕНЯЕМ ГЛОБАЛЬНО
+                  setLang(l as LangType);       // МЕНЯЕМ ГЛОБАЛЬНО
                   setIsLangOpen(false); // ЗАКРЫВАЕМ МЕНЮ
                 }}
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors ${lang === l ? 'bg-blue-50 text-blue-600 font-bold' : 'hover:bg-gray-50 text-gray-600'}`}
