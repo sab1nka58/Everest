@@ -9,7 +9,7 @@ export const mainBannerEn = {
     courses_title_blue: "Courses",
   courses_title_main: "and admissions",
   courses_description: "Admission continues daily from 09:00 to 20:00 at all our locations. When you come to the reception, our staff will determine your level through a test and a short interview and direct you to a trial lesson for a suitable group.",
-  btn_enroll: "Enroll now",
+  btn_enrol: "Enroll now",
 
 
   // Why Everest?

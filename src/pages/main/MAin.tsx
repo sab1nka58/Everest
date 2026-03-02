@@ -39,8 +39,8 @@ const MAin = () => {
   const bottomStats = getBottomStats(t);
   const services = getServicesData(t);
   const KidsData = getKidsData(t); // Получаем данные для Kids
-  const faqData = getFaqData(t); // Получаем данные для FAQ
-  const [activeId, setActiveId] = useState(null);
+  // const faqData = getFaqData(t); // Получаем данные для FAQ
+  const [activeId, setActiveId] = useState<number | null>(null);
 
   // Вызываем функцию с заглушкой (key => key), чтобы получить данные без ошибок
   const links = getNavLinks((key) => key);
@@ -134,7 +134,7 @@ const [searchTerm, setSearchTerm] = useState('');
             </div>
 
             <button className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-3">
-              {t("btn_enroll")} <TeleginIcon />
+              {t("btn_enrol")} <TeleginIcon />
             </button>
           </div>
 

@@ -10,7 +10,7 @@ export const mainUZ = {
     courses_title_blue: "Kurslar",
   courses_title_main: "va qabullar",
   courses_description: "Qabul barcha manzillarimizda har kuni 09:00 dan 20:00 gacha davom etadi. Qabulxonaga kelganingizda, xodimlarimiz test va qisqa suhbat orqali darajangizni aniqlab, sizga mos guruh uchun sinov darsiga yo‘naltiradi.",
-  btn_enroll: "Kursga yozilish",
+  btn_enrol: "Kursga yozilish",
 
 // Nega aynan Everest?
   why_everest_pink: "Nega ",
