@@ -6,7 +6,7 @@ import MAP from "../../../assets/location/Screenshot 2025-09-06 at 12.32.21 AM
 
 const Location = () => {
     const { t } = useLanguage();
-    const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState<number | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
 
     const filteredLocations = locations.filter(branch => 
