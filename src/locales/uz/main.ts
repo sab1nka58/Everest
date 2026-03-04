@@ -53,7 +53,7 @@ export const mainUZ = {
 
   // Everest Kids
   kids_title: "Maktab o'quvchilari uchun maxsus ingliz tili kurslari",
-  kids_desc: "1–9-sinf o‘quvchilari uchun mo‘ljallangan maxsus loyihamizda bolalarning yosh va darajasiga mos ravishda alohida guruhlarda ta’lim beriladi.",
+  kids_desc: "1–9-sinf o‘quvchilari uchun mo‘ljallangan maxsus loyihamizda bolalarning yosh va darajasiga mos ravishda alohida guruhlarda ta’lim beriladi. Kuchli va tajribali EVERESTER ustozlar maxsus dastur asosida bolalarning til ko‘nikmalarini bosqichma-bosqich rivojlantiradi.eriladi.",
   kids_btn_reg: "Kursga yozilish",
   kids_btn_more: "Batafsil ma'lumot",
   kids_youngsters_desc: "O‘yin va interaktiv mashg‘ulotlar orqali ingliz tilining asoslarini o‘rganish.",
